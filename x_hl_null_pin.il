@@ -1,0 +1,20 @@
+axlCmdRegister( "hl_pin" 'x_hl_null_pin)
+
+defun( x_hl_null_pin ()
+let((all p)
+	axlClearSelSet() 
+	axlVisibleDesign( nil) 
+	axlVisibleLayer( "PIN/TOP" t)
+	axlVisibleLayer( "PIN/BOTTOM" t)
+	axlVisibleUpdate(t)
+	axlSetFindFilter( ?enabled 
+	list("noall" "pins") ?onButtons 
+	list("noall" "pins")) 
+	axlAddSelectAll() 
+	all= axlGetSelSet()
+	foreach( p all
+		axlDehighlightObject(p t)
+		when(p -> net -> name == "" axlHighlightObject(p t))
+	)
+	axlClearSelSet()
+))
